@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'recipe.dart';
 
+//1
 class RecipeDetail extends StatefulWidget {
   final Recipe recipe;
   const RecipeDetail({
@@ -18,28 +19,34 @@ class _RecipeDetailState extends State<RecipeDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blueGrey,
       appBar: AppBar(
+        //2
         title: Text(widget.recipe.label),
       ),
       body: SafeArea(
-        // 3
         child: Column(
           children: <Widget>[
-            // 4
             SizedBox(
               height: 300,
               width: double.infinity,
               child: Image(
                 image: AssetImage(widget.recipe.imageUrl),
               ),
-            ), // 5
+            ),
             const SizedBox(
               height: 4,
             ),
             Text(
               widget.recipe.label,
-              style: const TextStyle(fontSize: 18),
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 25,
+                fontWeight: FontWeight.w700,
+                fontFamily: 'Palatino',
+              ),
             ),
+            //3
             Expanded(
                 child: ListView.builder(
               padding: const EdgeInsets.all(7.0),
@@ -47,9 +54,12 @@ class _RecipeDetailState extends State<RecipeDetail> {
               itemBuilder: (BuildContext context, int index) {
                 final ingredient = widget.recipe.ingredients[index];
                 return Text(
-                    '${ingredient.quantity * _sliderVal} ${ingredient.measure} ${ingredient.name} ');
+                  '${ingredient.quantity * _sliderVal} ${ingredient.measure} ${ingredient.name}',
+                  style: const TextStyle(color: Colors.white, fontSize: 16),
+                );
               },
             )),
+            //4
             Slider(
               min: 1,
               max: 10,
@@ -62,7 +72,7 @@ class _RecipeDetailState extends State<RecipeDetail> {
                 });
               },
               activeColor: Colors.green,
-              inactiveColor: Colors.black,
+              inactiveColor: Colors.grey,
             )
           ],
         ),

@@ -2,82 +2,95 @@ import 'package:flutter/material.dart';
 import 'recipe.dart';
 import 'recipe_detail.dart';
 
+//1
 void main() {
   runApp(const RecipeApp());
 }
 
+//2
 class RecipeApp extends StatelessWidget {
   const RecipeApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = ThemeData();
+    //3
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Recipe Caluculator',
       theme: theme.copyWith(
         colorScheme: theme.colorScheme.copyWith(
-          primary: Colors.grey,
+          primary: Colors.blue,
           secondary: Colors.black,
         ),
       ),
-      home: const MyHomePage(title: 'Recipe Calculator'),
+      home: const HomePage(title: 'Recipe Calculator'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
+//4
+class HomePage extends StatefulWidget {
   final String title;
+  const HomePage({Key? key, required this.title}) : super(key: key);
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    //5
     return Scaffold(
+      backgroundColor: Colors.blueGrey,
       appBar: AppBar(
         title: Text(widget.title),
         centerTitle: true,
       ),
-      body: SafeArea(
-        child: ListView.builder(
-            itemCount: Recipe.samples.length,
-            itemBuilder: (BuildContext context, int index) {
-              return GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return RecipeDetail(recipe: Recipe.samples[index]);
-                      },
-                    ),
-                  );
-                },
-                child: buildRecipeCard(Recipe.samples[index]),
-              );
-            }),
+      //6
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: SafeArea(
+          //7
+          child: ListView.builder(
+              itemCount: Recipe.samples.length,
+              itemBuilder: (BuildContext context, int index) {
+                //8
+                return GestureDetector(
+                  child: recipeCard(Recipe.samples[index]),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return RecipeDetail(recipe: Recipe.samples[index]);
+                        },
+                      ),
+                    );
+                  },
+                );
+              }),
+        ),
       ),
     );
   }
 
-  Widget buildRecipeCard(Recipe recipe) {
+  Widget recipeCard(Recipe recipe) {
+    //10
     return Card(
       elevation: 2.0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
+        //11
         child: Column(
           children: <Widget>[
             Image(image: AssetImage(recipe.imageUrl)),
             const SizedBox(
               height: 14.0,
             ),
+            //12
             Text(
               recipe.label,
               style: const TextStyle(
